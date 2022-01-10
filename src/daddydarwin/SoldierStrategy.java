@@ -9,7 +9,10 @@ public class SoldierStrategy {
 
     static void runSoldier(RobotController rc) throws GameActionException {
         // Try to attack someone
-        int radius = rc.getType().actionRadiusSquared;
+		if(rc.getHealth() < 5) {
+			RobotPlayer.soldierCount--;
+		}
+		int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
         RobotInfo[] enemies = rc.senseNearbyRobots(radius, opponent);
         MapLocation target = null;
@@ -70,9 +73,7 @@ public class SoldierStrategy {
                 System.out.println("I moved!");}
         }
         
-        if(rc.getHealth() < 5) {
-        	RobotPlayer.soldierCount--;
-        }
+
         
     }
 }

@@ -14,9 +14,12 @@ public class ArchonStrategy {
      * per turn.
      */
     static void runArchon(RobotController rc) throws GameActionException {
-        if(RobotPlayer.minerCount < 20){
+        if(RobotPlayer.minerCount < 30){
             buildTowardsLowRubble(rc, RobotType.MINER);
-        } else if (RobotPlayer.soldierCount < 35){
+            if (rc.getTeamLeadAmount(rc.getTeam()) > 100) {
+                buildTowardsLowRubble(rc, RobotType.SOLDIER);
+            }
+        } else if (RobotPlayer.soldierCount < 50){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         } else if (builders < 5){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
