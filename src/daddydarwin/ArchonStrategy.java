@@ -14,20 +14,20 @@ public class ArchonStrategy {
      * per turn.
      */
     static void runArchon(RobotController rc) throws GameActionException {
-        if(RobotPlayer.minerCount < 30){
+        if(miners < 30){
             buildTowardsLowRubble(rc, RobotType.MINER);
             if (rc.getTeamLeadAmount(rc.getTeam()) > 100) {
                 buildTowardsLowRubble(rc, RobotType.SOLDIER);
             }
-        } else if (RobotPlayer.soldierCount < 50){
+        } else if (soldiers < 50){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         } else if (builders < 5){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }
-        else if (RobotPlayer.minerCount < RobotPlayer.soldierCount && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
+        else if (miners < soldiers && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
             buildTowardsLowRubble(rc, RobotType.MINER);
         }
-        else if (builders < RobotPlayer.soldierCount / 20){
+        else if (builders < soldiers / 20){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }  else if (sages < 3) {
             buildTowardsLowRubble(rc, RobotType.SAGE);
@@ -44,8 +44,8 @@ public class ArchonStrategy {
             if(rc.canBuildRobot(type, d)){
                 rc.buildRobot(type, d);
                 switch(type){
-                    case MINER: miners++; RobotPlayer.minerCount++; break;
-                    case SOLDIER: soldiers++; RobotPlayer.soldierCount++; break;
+                    case MINER: miners++; break;
+                    case SOLDIER: soldiers++;  break;
                     case BUILDER: builders++; break;
                     case SAGE: sages++; break;
                     case WATCHTOWER: watchtowers++; break;
