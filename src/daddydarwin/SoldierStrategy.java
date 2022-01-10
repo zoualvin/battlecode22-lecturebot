@@ -72,6 +72,7 @@ public class SoldierStrategy {
         
         if(rc.getHealth() < 5) {
         	RobotPlayer.soldierCount--;
+        	System.out.println("UR MOM");
         }
         
     }
