@@ -11,6 +11,7 @@ public class SoldierStrategy {
         // Try to attack someone
 		if(rc.getHealth() < 5) {
 			RobotPlayer.soldierCount--;
+			System.out.println("UR MOM");
 		}
 		int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
@@ -74,6 +75,5 @@ public class SoldierStrategy {
         }
         
 
-        
     }
 }
