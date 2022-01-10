@@ -71,4 +71,15 @@ strictfp class MinerStrategy {
             rc.move(dir);
             System.out.println("I moved!");
         }
-    }}
+        
+        
+        if(rc.getHealth() < 5) {
+        	RobotPlayer.minerCount--;
+        }
+        
+        
+    }
+    
+
+
+}

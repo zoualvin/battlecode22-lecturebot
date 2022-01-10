@@ -70,5 +70,9 @@ public class SoldierStrategy {
                 System.out.println("I moved!");}
         }
         
+        if(rc.getHealth() < 5) {
+        	RobotPlayer.soldierCount--;
+        }
+        
     }
 }
