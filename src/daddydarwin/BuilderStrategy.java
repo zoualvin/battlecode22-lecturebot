@@ -12,7 +12,7 @@ strictfp class BuilderStrategy {
     static void runBuilder(RobotController rc) throws GameActionException{
 
         turn ++;
-        //repair neighboring buiulding
+        //repair neighboring building
         MapLocation me = rc.getLocation();
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
