@@ -9,10 +9,6 @@ public class SoldierStrategy {
 
     static void runSoldier(RobotController rc) throws GameActionException {
         // Try to attack someone
-		if(rc.getHealth() < 5) {
-			RobotPlayer.soldierCount--;
-			System.out.println("UR MOM");
-		}
 		int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
         RobotInfo[] enemies = rc.senseNearbyRobots(radius, opponent);

@@ -12,9 +12,7 @@ strictfp class MinerStrategy {
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
     static void runMiner(RobotController rc) throws GameActionException {
-        if(rc.getHealth() < 5) {
-            RobotPlayer.minerCount--;
-        }
+
         if(exploreDir == null){
             daddydarwin.RobotPlayer.rng.setSeed(rc.getID());
             exploreDir = daddydarwin.RobotPlayer.directions[daddydarwin.RobotPlayer.rng.nextInt(daddydarwin.RobotPlayer.directions.length)];
