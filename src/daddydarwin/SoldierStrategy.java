@@ -46,10 +46,18 @@ public class SoldierStrategy {
         }
 
         // Also try to move randomly. // change this
-        Direction dir = directions[rng.nextInt(directions.length)];
+        
+        //directionTo(MapLocation location)
+        //isWithinDistanceSquared(MapLocation location, int distanceSquared)
+        Direction dir = rc.getLocation().directionTo(enemies[rng.nextInt(enemies.length)].location);
         if (rc.canMove(dir)) {
             rc.move(dir);
             System.out.println("I moved!");
+        } else {
+        	dir = directions[rng.nextInt(directions.length)];
+        	if (rc.canMove(dir)) {
+                rc.move(dir);
+                System.out.println("I moved!");}
         }
     }
 }
