@@ -55,6 +55,7 @@ public class SoldierStrategy {
         //if archon is sensed, move towards it with pathing
         //if not, move in direction of random enemy on the map.
         //if no enemies detected, move in a random direction
+        //FOR LATER: have some soldiers move towards our own archons/labs/sages for protection
         if(target != null) {
         	Pathing.walkTowards(rc, target);
         } else if (dir != null){
