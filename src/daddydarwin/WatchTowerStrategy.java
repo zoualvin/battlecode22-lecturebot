@@ -14,11 +14,11 @@ strictfp class WatchTowerStrategy{
             MapLocation toAttack = enemies[0].location;
             
             for (int i = 0; i < enemies.length; i++) {
-        		if(enemies[i].getType() == battlecode.common.RobotType.ARCHON) {
+        		if(enemies[i].getType() == battlecode.common.RobotType.SOLDIER) {
         			 toAttack = enemies[i].location;
         			 
         			break;
-        		} else if (enemies[i].getType() == battlecode.common.RobotType.SOLDIER) {
+        		} else if (enemies[i].getType() == battlecode.common.RobotType.MINER) {
         			 toAttack = enemies[i].location;
         			break;
         			
