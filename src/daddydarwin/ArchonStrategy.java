@@ -18,13 +18,13 @@ public class ArchonStrategy {
             buildTowardsLowRubble(rc, RobotType.MINER);
         } else if (RobotPlayer.soldierCount < 35){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
-        } else if (builders < 8){
+        } else if (builders < 5){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }
-        else if (RobotPlayer.minerCount < RobotPlayer.soldierCount * 9/10 && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
+        else if (RobotPlayer.minerCount < RobotPlayer.soldierCount && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
             buildTowardsLowRubble(rc, RobotType.MINER);
         }
-        else if (builders < RobotPlayer.soldierCount / 10){
+        else if (builders < RobotPlayer.soldierCount / 20){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }  else if (sages < 3) {
             buildTowardsLowRubble(rc, RobotType.SAGE);
