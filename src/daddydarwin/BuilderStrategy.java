@@ -51,7 +51,12 @@ strictfp class BuilderStrategy {
         } else if(rc.getTeamLeadAmount(rc.getTeam()) > 250 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){
             rc.buildRobot(RobotType.WATCHTOWER, dir);
             Direction dir2 = RobotPlayer.directions[0+(int)(Math.random() * ((7-0)+1))];
-            rc.buildRobot(RobotType.SOLDIER, dir2);
+            if (rc.canBuildRobot(RobotType.SOLDIER, dir2)) {
+                rc.buildRobot(RobotType.SOLDIER, dir2);
+            } else if (rc.canBuildRobot(RobotType.MINER, dir2)) {
+                rc.buildRobot(RobotType.MINER, dir2);
+            }
+
         }
     }
 }
