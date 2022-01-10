@@ -12,14 +12,16 @@ public class SageStrategy {
          * when to call an abyss:
          */
         int chooseType = 0+(int)(Math.random() * ((10-0)+1));
-        if (chooseType % 3 == 0) {
+        if (chooseType % 3 == 0 && rc.canEnvision(AnomalyType.ABYSS)) {
             rc.envision(AnomalyType.ABYSS);
         }
-        else if (chooseType % 2 == 0) {
+        else if (chooseType % 2 == 0 && rc.canEnvision(AnomalyType.CHARGE)) {
             rc.envision(AnomalyType.CHARGE);
         }
         else {
-            rc.envision(AnomalyType.FURY);
+            if (rc.canEnvision(AnomalyType.FURY)) {
+                rc.envision(AnomalyType.FURY);
+            }
         }
 
         /**
