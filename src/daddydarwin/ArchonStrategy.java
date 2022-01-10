@@ -7,7 +7,7 @@ import daddydarwin.RobotPlayer;
 
 public class ArchonStrategy {
 
-    static int miners = 0, soldiers = 0, builders = 0;
+    static int miners = 0, soldiers = 0, builders = 0, sages = 0, watchtowers = 0, labs = 0;
     /**
      * Run a single turn for an Archon.
      * This code is wrapped inside the infinite loop in run(), so it is called once
@@ -18,13 +18,18 @@ public class ArchonStrategy {
             buildTowardsLowRubble(rc, RobotType.MINER);
         } else if (soldiers < 10){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
-        } else if (builders < 1){
+        } else if (builders < 10){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
-        } else if (miners < soldiers * 9/10 && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
+        }
+        else if (miners < soldiers * 9/10 && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
             buildTowardsLowRubble(rc, RobotType.MINER);
-        } else if (builders < soldiers / 30){
+        }
+        else if (builders < soldiers / 10){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
-        } else {
+        }  else if (sages < 3) {
+            buildTowardsLowRubble(rc, RobotType.SAGE);
+        }
+        else {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         }
     }
@@ -39,6 +44,9 @@ public class ArchonStrategy {
                     case MINER: miners++; break;
                     case SOLDIER: soldiers++; break;
                     case BUILDER: builders++; break;
+                    case SAGE: sages++; break;
+                    case WATCHTOWER: watchtowers++; break;
+                    case LABORATORY: labs++; break;
                     default: break;
                 }
             }
