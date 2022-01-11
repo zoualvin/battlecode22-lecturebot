@@ -33,10 +33,10 @@ public class SoldierStrategy {
         			 toAttack = enemies[i].location;
         			break;
         			
-        		} else if (enemies[i].getType() == battlecode.common.RobotType.LABORATORY) {
+        		} else if (enemies[i].getType() == battlecode.common.RobotType.MINER) {
         			 toAttack = enemies[i].location;
         			break;
-        		} else if (enemies[i].getType() == battlecode.common.RobotType.SAGE) {
+        		} else if (enemies[i].getType() == battlecode.common.RobotType.LABORATORY) {
         			 toAttack = enemies[i].location;
         			break;
         		}
