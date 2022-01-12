@@ -21,12 +21,13 @@ public class SoldierStrategy {
         	
         	//attack priority: enemy archons, soldiers, watchtowers, labs, then whatever's closest. take into account rubble later.
         	for (int i = 0; i < enemies.length; i++) {
-        		if(enemies[i].getType() == battlecode.common.RobotType.ARCHON) {
+        		if(enemies[i].getType() == battlecode.common.RobotType.SOLDIER) {
+        			 toAttack = enemies[i].location;
+        			 
+        			break;
+        		} else if (enemies[i].getType() == battlecode.common.RobotType.ARCHON) {
         			 toAttack = enemies[i].location;
         			 target = enemies[i].location;
-        			break;
-        		} else if (enemies[i].getType() == battlecode.common.RobotType.SOLDIER) {
-        			 toAttack = enemies[i].location;
         			break;
         			
         		} else if (enemies[i].getType() == battlecode.common.RobotType.WATCHTOWER) {
