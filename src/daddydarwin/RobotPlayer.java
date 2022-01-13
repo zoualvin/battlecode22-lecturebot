@@ -40,6 +40,20 @@ public strictfp class RobotPlayer {
     	int y = num % 100;
     	return new MapLocation(x,y);}
     }
+    
+    static void addLocationToArray(RobotController rc, MapLocation target) throws GameActionException {
+    	int location = RobotPlayer.convertToOneInt(target);
+		 //writes enemy archons into shared array
+		 for(int j = 0; j < 8; j++) {
+			 int loc = rc.readSharedArray(j);
+			 if(loc == location) { break;}
+			 
+			 else if(loc == 0) {
+				 rc.writeSharedArray(j, location);
+				 break;
+			 }
+		 }
+    }
    
     
 
