@@ -23,8 +23,8 @@ public strictfp class RobotPlayer {
      */
     static int turnCount = 0;
     
-    static int convertToOneInt(int x, int y) {
-    	return (x * 100 + y);
+    static int convertToOneInt(MapLocation location) {
+    	return (location.x * 100 + location.y);
     }
     
     static MapLocation convertToLocation(int num) {
