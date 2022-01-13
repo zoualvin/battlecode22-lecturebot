@@ -24,13 +24,21 @@ public strictfp class RobotPlayer {
     static int turnCount = 0;
     
     static int convertToOneInt(MapLocation location) {
-    	return (location.x * 100 + location.y);
+    	
+    	if(location.x == 0 && location.y == 0) {
+    		return 61; // to account for fact that arrays are initialized with 0 and not null
+    	} else {
+    	return (location.x * 100 + location.y);}
     }
     
     static MapLocation convertToLocation(int num) {
+    	if(num == 61) {
+    		return new MapLocation(0,0);
+    	}else {
+    	
     	int x = num/100;
     	int y = num % 100;
-    	return new MapLocation(x,y);
+    	return new MapLocation(x,y);}
     }
    
     
