@@ -22,6 +22,16 @@ public strictfp class RobotPlayer {
      * these variables are static, in Battlecode they aren't actually shared between your robots.
      */
     static int turnCount = 0;
+    
+    static int convertToOneInt(int x, int y) {
+    	return (x * 100 + y);
+    }
+    
+    static MapLocation convertToLocation(int num) {
+    	int x = num/100;
+    	int y = num % 100;
+    	return new MapLocation(x,y);
+    }
    
     
 
