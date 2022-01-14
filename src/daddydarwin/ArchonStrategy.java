@@ -20,7 +20,7 @@ public class ArchonStrategy {
                 buildTowardsLowRubble(rc, RobotType.MINER);
             }
         }
-        if (RobotPlayer.turnCount > 1800 && RobotPlayer.turnCount < 1900) {
+        if (RobotPlayer.turnCount > 1700 && RobotPlayer.turnCount < 1900) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         }
         if(miners < 20){
@@ -39,8 +39,8 @@ public class ArchonStrategy {
             buildTowardsLowRubble(rc, RobotType.SAGE);
         }
         else {
-            int choose = 0+(int)(Math.random() * ((1-0)+1));
-            if (choose == 0) {
+            int choose = 0+(int)(Math.random() * ((1-0)+1)); //evaluate based on array how many soldiers or miners we needed; whichever count is lower is what will spawn
+            if (choose == 0) { //use random step if the counts are equal in array
                 buildTowardsLowRubble(rc, RobotType.MINER);
             } else {
                 buildTowardsLowRubble(rc, RobotType.SOLDIER);
