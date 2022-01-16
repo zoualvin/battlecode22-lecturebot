@@ -2,7 +2,7 @@ package daddydarwin;
 
 import battlecode.common.*;
 
-//watchtower should remain in turret mode for most of round; don't move them instead focus on upgrading them
+//watchtower should remain in turret mode for most of round; don't move them instead focus on upgrading them; maybe add priority first
 strictfp class WatchTowerStrategy{
     static void runWatchTower(RobotController rc) throws GameActionException {
         // Try to attack someone

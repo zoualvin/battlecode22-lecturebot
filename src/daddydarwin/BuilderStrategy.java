@@ -5,11 +5,12 @@ import daddydarwin.Pathing;
 
 import java.util.Random;
 
-// direct builders to
+// implement mutation methods to mutate the watchtowers to level 3 if applicable
 strictfp class BuilderStrategy {
 
     static int turn = 0;
-
+    static int numWatchTowers = 0;
+    static int numLabs = 0;
     static void runBuilder(RobotController rc) throws GameActionException{
 
         turn ++;
@@ -49,8 +50,19 @@ strictfp class BuilderStrategy {
 
         if(rc.getTeamLeadAmount(rc.getTeam()) > 900 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
             rc.buildRobot(RobotType.LABORATORY, dir);
-        } else if(rc.getTeamLeadAmount(rc.getTeam()) > 1000 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){
+            numLabs++;
+        } else if(rc.getTeamLeadAmount(rc.getTeam()) > 1000 && rc.canBuildRobot(RobotType.WATCHTOWER, dir) && numWatchTowers <= 2){ // && numWatchTower per archon <= 2
             rc.buildRobot(RobotType.WATCHTOWER, dir);
+            numWatchTowers++;
+            // implement code to build the robot in space near the archon
         }
+
+        //transmutation methods if there is at least 200pB mutate both watchtowers to level 2; same for laboratory
+        /**
+         * if (rc.getTeamLeadAmount(rc.getTeam()) > 500 && rc.canMutate()) {
+         *             rc.mutate(); NEED TO WRITE SOMETHING THAT CAN FIND LOCATION OF WATCHTOWER
+         *         }
+         */
+
     }
 }

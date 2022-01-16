@@ -8,8 +8,7 @@ public class LaboratoryStrategy {
     	//check how many bots are in vision radius. if over 30, dont transmute.
     	int visionRadius = rc.getType().visionRadiusSquared;
     	RobotInfo [] nearbyBots = rc.senseNearbyRobots(visionRadius, rc.getTeam());
-    	
-    	
+
     	if (rc.getTeamLeadAmount(rc.getTeam()) > 200 && rc.canTransmute() && nearbyBots.length < 30) {
             rc.transmute();
         }
