@@ -9,7 +9,7 @@ import daddydarwin.RobotPlayer;
 public class ArchonStrategy {
 
     //static int miners = 0, soldiers = 0, builders = 0, sages = 0, watchtowers = 0, labs = 0;
-    //in array 2^16-4 is miner --> 2^16-3 soldier --> 2^16 - 2 archon --> 2^16 - 1 builders
+    //in array 2^6-4 is miner --> 2^6-3 soldier --> 2^6 - 2 archon --> 2^6 - 1 builders
     /**
      * Run a single turn for an Archon.
      * This code is wrapped inside the infinite loop in run(), so it is called once
@@ -25,17 +25,17 @@ public class ArchonStrategy {
         if (RobotPlayer.turnCount > 1700 && RobotPlayer.turnCount < 1900) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         }
-        if(rc.readSharedArray((int)(Math.pow(2,16))-4) < 20){
+        if(rc.readSharedArray((int)(Math.pow(2,6))-4) < 20){
             buildTowardsLowRubble(rc, RobotType.MINER);
-        } else if (rc.readSharedArray((int)(Math.pow(2,16))-3) < 25){
+        } else if (rc.readSharedArray((int)(Math.pow(2,6))-3) < 25){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
-        } else if (rc.readSharedArray((int)(Math.pow(2,16))-1) < 5){
+        } else if (rc.readSharedArray((int)(Math.pow(2,6))-1) < 5){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }
-        else if (rc.readSharedArray((int)(Math.pow(2,16))-4) < rc.readSharedArray((int)(Math.pow(2,16))-3) && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
+        else if (rc.readSharedArray((int)(Math.pow(2,6))-4) < rc.readSharedArray((int)(Math.pow(2,6))-3) && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
             buildTowardsLowRubble(rc, RobotType.MINER);
         }
-        else if (rc.readSharedArray((int)(Math.pow(2,16))-1) < rc.readSharedArray((int)(Math.pow(2,16))-3) / 20){
+        else if (rc.readSharedArray((int)(Math.pow(2,6))-1) < rc.readSharedArray((int)(Math.pow(2,6))-3) / 20){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }  //else if (sages < 1) {
             //buildTowardsLowRubble(rc, RobotType.SAGE); sage counter NOT needed here
@@ -57,9 +57,9 @@ public class ArchonStrategy {
             if(rc.canBuildRobot(type, d)){
                 rc.buildRobot(type, d);
                 switch(type){
-                    case MINER: rc.writeSharedArray((int)(Math.pow(2,16))-4, rc.readSharedArray((int)(Math.pow(2,16))-4)+1); break;
-                    case SOLDIER: rc.writeSharedArray((int)(Math.pow(2,16))-3, rc.readSharedArray((int)(Math.pow(2,16))-3)+1);  break;
-                    case BUILDER: rc.writeSharedArray((int)(Math.pow(2,16))-1,rc.readSharedArray((int)(Math.pow(2,16))-1)+1); break;
+                    case MINER: rc.writeSharedArray((int)(Math.pow(2,6))-4, rc.readSharedArray((int)(Math.pow(2,6))-4)+1); break;
+                    case SOLDIER: rc.writeSharedArray((int)(Math.pow(2,6))-3, rc.readSharedArray((int)(Math.pow(2,6))-3)+1);  break;
+                    case BUILDER: rc.writeSharedArray((int)(Math.pow(2,6))-1,rc.readSharedArray((int)(Math.pow(2,6))-1)+1); break;
                     //case SAGE: sages++; break;
                     //case WATCHTOWER: watchtowers++; break;
                     //case LABORATORY: labs++; break;
