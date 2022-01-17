@@ -29,7 +29,7 @@ public class ArchonStrategy {
         if (RobotPlayer.turnCount > 1800 && RobotPlayer.turnCount < 1900) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         }
-        if(miners < 20){
+        if(miners < 10){
             buildTowardsLowRubble(rc, RobotType.MINER);
         } else if (soldiers < 25){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
