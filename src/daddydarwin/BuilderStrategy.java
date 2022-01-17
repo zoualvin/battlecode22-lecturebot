@@ -4,7 +4,7 @@ import battlecode.common.*;
 import daddydarwin.Pathing;
 
 import java.util.Random;
-
+import daddydarwin.WatchTowerStrategy;
 // implement mutation methods to mutate the watchtowers to level 3 if applicable
 strictfp class BuilderStrategy {
 
@@ -58,11 +58,11 @@ strictfp class BuilderStrategy {
         }
 
         //transmutation methods if there is at least 200pB mutate both watchtowers to level 2; same for laboratory
-        /**
-         * if (rc.getTeamLeadAmount(rc.getTeam()) > 500 && rc.canMutate()) {
-         *             rc.mutate(); NEED TO WRITE SOMETHING THAT CAN FIND LOCATION OF WATCHTOWER
-         *         }
-         */
+
+        if (rc.getTeamLeadAmount(rc.getTeam()) > 500 && rc.canMutate(WatchTowerStrategy.loc)) {
+            Pathing.walkTowards(rc, WatchTowerStrategy.loc);
+            rc.mutate(WatchTowerStrategy.loc);
+        }
 
     }
 }

@@ -4,8 +4,11 @@ import battlecode.common.*;
 
 //watchtower should remain in turret mode for most of round; don't move them instead focus on upgrading them; maybe add priority first
 strictfp class WatchTowerStrategy{
+	static MapLocation loc = null;
     static void runWatchTower(RobotController rc) throws GameActionException {
         // Try to attack someone
+		loc = rc.getLocation();
+
         int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
         RobotInfo[] enemies = rc.senseNearbyRobots(radius, opponent);

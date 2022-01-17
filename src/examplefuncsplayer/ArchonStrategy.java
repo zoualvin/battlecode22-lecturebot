@@ -13,6 +13,9 @@ public class ArchonStrategy {
      * per turn.
      */
     static void runArchon(RobotController rc) throws GameActionException {
+        miners = Communication.getAlive(rc, RobotType.MINER);
+        soldiers = Communication.getAlive(rc, RobotType.SOLDIER);
+        builders = Communication.getAlive(rc, RobotType.BUILDER);
         if(miners < 5){
             buildTowardsLowRubble(rc, RobotType.MINER);
         } else if (soldiers < 10){
@@ -52,5 +55,4 @@ public class ArchonStrategy {
             e.printStackTrace();
             return 0;
         }
-    }
-}
+    }}
