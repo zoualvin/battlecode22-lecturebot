@@ -5,7 +5,7 @@ import battlecode.common.*;
 import static battlecode.common.Clock.getBytecodeNum;
 import static daddydarwin.RobotPlayer.directions;
 import static daddydarwin.RobotPlayer.rng;
-
+import daddydarwin.ArchonStrategy;
 public class SoldierStrategy {
 	// have a separate method for defense and offense soldiers.
 	// keeping track of identities over turns is hard. maybe make it so that if soldier is certain distance from 
@@ -16,7 +16,8 @@ public class SoldierStrategy {
 	
 	//gives soldier identity of offense or defense.
 	//returns 69 = offense returns 420 = defense
-	
+
+	/**
 	static int identifySoldier(RobotController rc) {
 		RobotInfo[] friends = rc.senseNearbyRobots(4, rc.getTeam()); //get all robots in 4 space radius
 		boolean archon = false;
@@ -74,7 +75,7 @@ public class SoldierStrategy {
         }
 		
 	}
-	
+	**/
 	
 	
 	
@@ -84,27 +85,29 @@ public class SoldierStrategy {
 		int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
         RobotInfo[] enemies = rc.senseNearbyRobots(radius, opponent);
-        RobotInfo archon = null;
+		MapLocation target = null; //newcode
+		Direction dir = null; //newcode
+		//RobotInfo archon = null;
         
-        int identity = identifySoldier(rc);
+        //int identity = identifySoldier(rc);
         
         
         if (enemies.length > 0) {
         	MapLocation toAttack = enemies[0].location;
-        	
+        	dir = rc.getLocation().directionTo(enemies[rng.nextInt(enemies.length)].location); //newcode
         	
         	//attack priority: enemy archons, soldiers, watchtowers, labs, then whatever's closest. take into account rubble later.
         	for (int i = 0; i < enemies.length; i++) {
         		if(enemies[i].getType() == battlecode.common.RobotType.SOLDIER) {
         			 toAttack = enemies[i].location;
-        			 
         			break;
         		} else if (enemies[i].getType() == battlecode.common.RobotType.ARCHON) {
-        			archon = enemies[i];
+        			//archon = enemies[i];
         			toAttack = enemies[i].location;
-        			
-        			 RobotPlayer.addLocationToArray(rc, toAttack);
-        			 System.out.println("found an archon!");
+					target = enemies[i].location;
+
+					// RobotPlayer.addLocationToArray(rc, toAttack);
+        			 //System.out.println("found an archon!");
         			 
         			break;
         			
@@ -125,10 +128,41 @@ public class SoldierStrategy {
         	if (rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
             }
+			if(target != null) {
+				Pathing.walkTowards(rc, target);
+			} else if (dir != null){
+				if (rc.canMove(dir)) {
+					rc.move(dir);
+					System.out.println("I moved!");
+				}
+			} else {
+				dir = directions[rng.nextInt(directions.length)];
+				if (rc.canMove(dir)) {
+					rc.move(dir);
+					System.out.println("I moved!");}
+			}
+			/**
+			if (rc.getHealth() < 6) {
+				System.out.println("yo im dead");
+				//int soldierCount = rc.readSharedArray(61);
+				//soldierCount -= 1;
+				rc.writeSharedArray(61, rc.readSharedArray(61)-1);
+				//System.out.println("there are " +rc.readSharedArray(61)+ " soldiers now!");//to check updated numbers
+
+			}
+			 **/
+			if (rc.getHealth() < 6) {
+				System.out.println("yo im dead");
+				ArchonStrategy.soldiers -= 1;
+
+			}
+			if (getBytecodeNum() == 10000) {
+				Clock.yield();
+			}
         		
         
         }
-        
+        /**
         //MOVE
         
         if(identity == 420) {
@@ -174,18 +208,21 @@ public class SoldierStrategy {
 	        		System.out.println("archon almost dead!");
 	        	}
         	}
+		 **/
         	
         }
 
       
         
-        
+        /**
         if (getBytecodeNum() == 10000) {
 			Clock.yield();
 		}
+		 **/
         
         
         //report death sequence
+	/**
         if (rc.getHealth() < 6) {
         	System.out.println("yo im dead");
         	int soldierCount = rc.readSharedArray(61);
@@ -194,6 +231,7 @@ public class SoldierStrategy {
         	System.out.println("there are " +rc.readSharedArray(61)+ " soldiers now!");//to check updated numbers
         	
         }
+	 **/
 
     }
     
@@ -212,4 +250,4 @@ public class SoldierStrategy {
     //maybe have all of the array writing functions take into account number of archons on map before doing for loop
     
     
-}
+

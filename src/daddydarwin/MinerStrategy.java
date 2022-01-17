@@ -2,7 +2,7 @@ package daddydarwin;
 
 import battlecode.common.*;
 import daddydarwin.Pathing;
-
+import daddydarwin.ArchonStrategy;
 import java.util.Random;
 
 import static battlecode.common.Clock.getBytecodeNum;
@@ -86,16 +86,21 @@ strictfp class MinerStrategy {
             rc.move(dir);
             System.out.println("I moved!");
         }
-        
+        if (rc.getHealth() < 6) {
+            System.out.println("lol bishes im dead");
+            ArchonStrategy.miners -= 1;
+        }
+        /**
         //report death sequence
         if (rc.getHealth() < 6) {
         	System.out.println("yo im dead");
-        	int minerCount = rc.readSharedArray(60);
-        	minerCount--;
-        	rc.writeSharedArray(60, minerCount);
-        	System.out.println("there are " +rc.readSharedArray(60)+ " miners now!");//to check updated numbers
+        	//int minerCount = rc.readSharedArray(60);
+        	//minerCount-=1;
+        	rc.writeSharedArray(60, rc.readSharedArray(60)-1);
+        	//System.out.println("there are " +rc.readSharedArray(60)+ " miners now!");//to check updated numbers
         	
         }
+         **/
         
 
         

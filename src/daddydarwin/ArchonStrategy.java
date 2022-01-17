@@ -10,14 +10,56 @@ import static battlecode.common.Clock.getBytecodeNum;
 //access shared array; update number of each robot/builder in the array (modify buildTowardsLowRubble)
 //keep soldier spawning in a x^2+y^2=16 circle where the archon is the origin
 public class ArchonStrategy {
-
+    static int miners = 0, soldiers = 0, builders = 0, sages = 0, watchtowers = 0, labs = 0;
+    static MapLocation lol = null;
+    /**
+     * Run a single turn for an Archon.
+     * This code is wrapped inside the infinite loop in run(), so it is called once
+     * per turn.
+     */
+    static void runArchon(RobotController rc) throws GameActionException {
+        MapLocation archonLoc = rc.getLocation();
+        lol = archonLoc;
+        if (RobotPlayer.turnCount > 800 && RobotPlayer.turnCount < 1000) {
+            buildTowardsLowRubble(rc, RobotType.SOLDIER);
+            if (rc.getTeamLeadAmount(rc.getTeam()) > 100) {
+                buildTowardsLowRubble(rc, RobotType.MINER);
+            }
+        }
+        if (RobotPlayer.turnCount > 1800 && RobotPlayer.turnCount < 1900) {
+            buildTowardsLowRubble(rc, RobotType.SOLDIER);
+        }
+        if(miners < 20){
+            buildTowardsLowRubble(rc, RobotType.MINER);
+        } else if (soldiers < 25){
+            buildTowardsLowRubble(rc, RobotType.SOLDIER);
+        } else if (builders < 5){
+            buildTowardsLowRubble(rc, RobotType.BUILDER);
+        }
+        else if (miners < soldiers && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
+            buildTowardsLowRubble(rc, RobotType.MINER);
+        }
+        else if (builders < soldiers / 20){
+            buildTowardsLowRubble(rc, RobotType.BUILDER);
+        }  else if (sages < 1) {
+            buildTowardsLowRubble(rc, RobotType.SAGE);
+        }
+        else {
+            int choose = 0+(int)(Math.random() * ((1-0)+1));
+            if (choose == 0) {
+                buildTowardsLowRubble(rc, RobotType.MINER);
+            } else {
+                buildTowardsLowRubble(rc, RobotType.SOLDIER);
+            }
+        }
+    }
     //static int miners = 0, soldiers = 0, builders = 0, sages = 0, watchtowers = 0, labs = 0;
     //in array 2^6-4 is miner --> 2^6-3 soldier --> 2^6 - 2 archon --> 2^6 - 1 builders
     /**
      * Run a single turn for an Archon.
      * This code is wrapped inside the infinite loop in run(), so it is called once
      * per turn.
-     */
+     *
     static MapLocation lol = null;
     static void runArchon(RobotController rc) throws GameActionException { //throw out static ints above instead read from awway each time
         MapLocation archonPlace = rc.getLocation();
@@ -29,7 +71,7 @@ public class ArchonStrategy {
                 numSoldiersAround++;
             }
         }
-        if (numSoldiersAround < 5) {
+        if (numSoldiersAround < 5 && RobotPlayer.turnCount > 250) {
             for (int i = 0; i < 4; i++) {
                 buildTowardsLowRubble(rc, RobotType.SOLDIER);
             }
@@ -44,20 +86,20 @@ public class ArchonStrategy {
         if (RobotPlayer.turnCount > 1700 && RobotPlayer.turnCount < 1900) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         }
-        if(rc.readSharedArray((int)(Math.pow(2,6))-4) < 10){
+        if(rc.readSharedArray(60) < 10){
             buildTowardsLowRubble(rc, RobotType.MINER);
             int ran = RobotPlayer.rng.nextInt(3);
             if(ran == 1) {
             	buildTowardsLowRubble(rc, RobotType.SOLDIER);}
-        } else if (rc.readSharedArray((int)(Math.pow(2,6))-3) < 25){
+        } else if (rc.readSharedArray(61) < 25){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
-        } else if (rc.readSharedArray((int)(Math.pow(2,6))-1) < 5){
+        } else if (rc.readSharedArray(63) < 5){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }
-        else if (rc.readSharedArray((int)(Math.pow(2,6))-4) < rc.readSharedArray((int)(Math.pow(2,6))-3) && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
+        else if (rc.readSharedArray(60) < rc.readSharedArray(61) && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
             buildTowardsLowRubble(rc, RobotType.MINER);
         }
-        else if (rc.readSharedArray((int)(Math.pow(2,6))-1) < rc.readSharedArray((int)(Math.pow(2,6))-3) / 20){
+        else if (rc.readSharedArray(63) < rc.readSharedArray(61) / 20){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         }  //else if (sages < 1) {
             //buildTowardsLowRubble(rc, RobotType.SAGE); sage counter NOT needed here
@@ -74,6 +116,7 @@ public class ArchonStrategy {
             Clock.yield();
         }
     }
+     **/
 
     static void buildTowardsLowRubble(RobotController rc, RobotType type) throws GameActionException {
         Direction[] dirs = Arrays.copyOf(RobotPlayer.directions, RobotPlayer.directions.length);
