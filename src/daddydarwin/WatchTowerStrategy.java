@@ -46,7 +46,7 @@ strictfp class WatchTowerStrategy{
                 rc.attack(toAttack);
             }
 			if (getBytecodeNum() == 10000) {
-				CLock.yield();
+				Clock.yield();
 			}
         }
     }
