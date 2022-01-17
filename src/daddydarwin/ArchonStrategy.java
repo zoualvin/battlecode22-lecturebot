@@ -9,6 +9,7 @@ import static battlecode.common.Clock.getBytecodeNum;
 
 //access shared array; update number of each robot/builder in the array (modify buildTowardsLowRubble)
 //keep soldier spawning in a x^2+y^2=16 circle where the archon is the origin
+
 public class ArchonStrategy {
     static int miners = 0, soldiers = 0, builders = 0, sages = 0, watchtowers = 0, labs = 0;
     static MapLocation lol = null;
@@ -118,6 +119,7 @@ public class ArchonStrategy {
     }
      **/
 
+    /**
     static void buildTowardsLowRubble(RobotController rc, RobotType type) throws GameActionException {
         Direction[] dirs = Arrays.copyOf(RobotPlayer.directions, RobotPlayer.directions.length);
         Arrays.sort(dirs, (a, b) -> getRubble(rc, a) - getRubble(rc, b));
@@ -131,6 +133,25 @@ public class ArchonStrategy {
                     //case SAGE: sages++; break;
                     //case WATCHTOWER: watchtowers++; break;
                     //case LABORATORY: labs++; break;
+                    default: break;
+                }
+            }
+        }
+    }
+     **/
+    static void buildTowardsLowRubble(RobotController rc, RobotType type) throws GameActionException {
+        Direction[] dirs = Arrays.copyOf(RobotPlayer.directions, RobotPlayer.directions.length);
+        Arrays.sort(dirs, (a, b) -> getRubble(rc, a) - getRubble(rc, b));
+        for (Direction d : dirs){
+            if(rc.canBuildRobot(type, d)){
+                rc.buildRobot(type, d);
+                switch(type){
+                    case MINER: miners++; break;
+                    case SOLDIER: soldiers++;  break;
+                    case BUILDER: builders++; break;
+                    case SAGE: sages++; break;
+                    case WATCHTOWER: watchtowers++; break;
+                    case LABORATORY: labs++; break;
                     default: break;
                 }
             }
