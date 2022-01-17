@@ -24,7 +24,7 @@ public class ArchonStrategy {
         RobotInfo[] friendlyRobots = rc.senseNearbyRobots(archonPlace, rc.getType().actionRadiusSquared, rc.getTeam());
         int numSoldiersAround = 0;
         for (int i = 0; i < friendlyRobots.length; i++) {
-            if (friendlyRobots[i].equals(RobotType.SOLDIER)) {
+            if (friendlyRobots[i].getType() == battlecode.common.RobotType.SOLDIER) {
                 numSoldiersAround++;
 
             }
