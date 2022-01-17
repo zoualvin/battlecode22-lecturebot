@@ -34,7 +34,6 @@ strictfp class MinerStrategy {
                 }
             }
         }
-
         int visionRadius = rc.getType().visionRadiusSquared;
         MapLocation[] nearbyLocations = rc.senseNearbyLocationsWithLead(me, visionRadius, 1);
         RobotInfo[] enemies = rc.senseNearbyRobots(visionRadius, rc.getTeam().opponent());

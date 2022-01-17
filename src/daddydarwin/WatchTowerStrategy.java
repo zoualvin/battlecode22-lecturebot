@@ -8,7 +8,6 @@ strictfp class WatchTowerStrategy{
     static void runWatchTower(RobotController rc) throws GameActionException {
         // Try to attack someone
 		loc = rc.getLocation();
-
         int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
         RobotInfo[] enemies = rc.senseNearbyRobots(radius, opponent);
