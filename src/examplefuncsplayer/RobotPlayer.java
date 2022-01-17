@@ -1,6 +1,7 @@
 package examplefuncsplayer;
 
 import battlecode.common.*;
+
 import java.util.Random;
 
 /**
@@ -27,15 +28,17 @@ public strictfp class RobotPlayer {
 
     /** Array containing all the possible movement directions. */
     static final Direction[] directions = {
-        Direction.NORTH,
-        Direction.NORTHEAST,
-        Direction.EAST,
-        Direction.SOUTHEAST,
-        Direction.SOUTH,
-        Direction.SOUTHWEST,
-        Direction.WEST,
-        Direction.NORTHWEST,
+            Direction.NORTH,
+            Direction.NORTHEAST,
+            Direction.EAST,
+            Direction.SOUTHEAST,
+            Direction.SOUTH,
+            Direction.SOUTHWEST,
+            Direction.WEST,
+            Direction.NORTHWEST,
     };
+
+    static RobotInfo[] nearbyEnemies = null;
 
     /**
      * run() is the method that is called when a robot is instantiated in the Battlecode world.
@@ -54,6 +57,14 @@ public strictfp class RobotPlayer {
         // You can also use indicators to save debug notes in replays.
         rc.setIndicatorString("Hello world!");
 
+        if (rc.getType() == RobotType.ARCHON) {
+            final int x = rc.getLocation().x, y = rc.getLocation().y;
+            //assume enemies at reflection locations
+            Communication.reportEnemy(rc, new MapLocation(x, rc.getMapHeight() - y - 1));
+            Communication.reportEnemy(rc, new MapLocation(rc.getMapWidth() - x - 1, y));
+            Communication.reportEnemy(rc, new MapLocation(rc.getMapWidth() - x - 1, rc.getMapHeight() - y - 1));
+        }
+
         while (true) {
             // This code runs during the entire lifespan of the robot, which is why it is in an infinite
             // loop. If we ever leave this loop and return from run(), the robot dies! At the end of the
@@ -62,6 +73,16 @@ public strictfp class RobotPlayer {
             turnCount += 1;  // We have now been alive for one more turn!
             System.out.println("Age: " + turnCount + "; Location: " + rc.getLocation());
 
+            Communication.reportAlive(rc); // report that we are alive!
+            Communication.clearObsoleteEnemies(rc); //remove outdated enemy locations
+
+            RobotInfo[] nearbyEnemies = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
+            for (RobotInfo r: nearbyEnemies) {
+                Communication.reportEnemy(rc, r.location);
+            }
+
+            rc.setIndicatorString(Integer.toString(Communication.getAlive(rc, rc.getType())));
+
             // Try/catch blocks stop unhandled exceptions, which cause your robot to explode.
             try {
                 // The same run() function is called for every robot on your team, even if they are
@@ -69,12 +90,12 @@ public strictfp class RobotPlayer {
                 // use different strategies on different robots. If you wish, you are free to rewrite
                 // this into a different control structure!
                 switch (rc.getType()) {
-                    case ARCHON:     runArchon(rc);  break;
+                    case ARCHON:     ArchonStrategy.runArchon(rc);  break;
                     case MINER:      MinerStrategy.runMiner(rc);   break;
                     case SOLDIER:    runSoldier(rc); break;
-                    case LABORATORY: // Examplefuncsplayer doesn't use any of these robot types below.
-                    case WATCHTOWER: // You might want to give them a try!
-                    case BUILDER:
+                    case LABORATORY: LaboratoryStrategy.runLaboratory(rc); break;
+                    case WATCHTOWER: WatchTowerStrategy.runWatchTower(rc); break;
+                    case BUILDER:    BuilderStrategy.runBuilder(rc); break;
                     case SAGE:       break;
                 }
             } catch (GameActionException e) {
@@ -102,57 +123,6 @@ public strictfp class RobotPlayer {
     }
 
     /**
-     * Run a single turn for an Archon.
-     * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
-     */
-    static void runArchon(RobotController rc) throws GameActionException {
-        // Pick a direction to build in.
-        Direction dir = directions[rng.nextInt(directions.length)];
-        if (rng.nextBoolean()) {
-            // Let's try to build a miner.
-            rc.setIndicatorString("Trying to build a miner");
-            if (rc.canBuildRobot(RobotType.MINER, dir)) {
-                rc.buildRobot(RobotType.MINER, dir);
-            }
-        } else {
-            // Let's try to build a soldier.
-            rc.setIndicatorString("Trying to build a soldier");
-            if (rc.canBuildRobot(RobotType.SOLDIER, dir)) {
-                rc.buildRobot(RobotType.SOLDIER, dir);
-            }
-        }
-    }
-
-    /**
-     * Run a single turn for a Miner.
-     * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
-     */
-    static void runMiner(RobotController rc) throws GameActionException {
-        // Try to mine on squares around us.
-        MapLocation me = rc.getLocation();
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                MapLocation mineLocation = new MapLocation(me.x + dx, me.y + dy);
-                // Notice that the Miner's action cooldown is very low.
-                // You can mine multiple times per turn!
-                while (rc.canMineGold(mineLocation)) {
-                    rc.mineGold(mineLocation);
-                }
-                while (rc.canMineLead(mineLocation)) {
-                    rc.mineLead(mineLocation);
-                }
-            }
-        }
-
-        // Also try to move randomly.
-        Direction dir = directions[rng.nextInt(directions.length)];
-        if (rc.canMove(dir)) {
-            rc.move(dir);
-            System.out.println("I moved!");
-        }
-    }
-
-    /**
      * Run a single turn for a Soldier.
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
      */
@@ -165,6 +135,11 @@ public strictfp class RobotPlayer {
             MapLocation toAttack = enemies[0].location;
             if (rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
+            }
+        } else {
+            Direction dir = rc.getLocation().directionTo(Communication.getClosestEnemy(rc));
+            if(dir != null && rc.canMove(dir)){
+                rc.move(dir);
             }
         }
 
