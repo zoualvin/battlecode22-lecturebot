@@ -26,11 +26,10 @@ public class ArchonStrategy {
         for (int i = 0; i < friendlyRobots.length; i++) {
             if (friendlyRobots[i].equals(RobotType.SOLDIER)) {
                 numSoldiersAround++;
-
             }
         }
         if (numSoldiersAround < 5) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 2; i++) {
                 buildTowardsLowRubble(rc, RobotType.SOLDIER);
             }
         }
