@@ -56,8 +56,8 @@ strictfp class BuilderStrategy {
             rc.buildRobot(RobotType.LABORATORY, dir);
             numLabs++;
         } else if(rc.getTeamLeadAmount(rc.getTeam()) > 1000 && rc.canBuildRobot(RobotType.WATCHTOWER, dir) && numWatchTowers <= 2){ // && numWatchTower per archon <= 2
-            int xcoord = ArchonStrategy.archonPlace.x + 4;
-            int ycoord = ArchonStrategy.archonPlace.y - 3;
+            int xcoord = ArchonStrategy.lol.x + 4;
+            int ycoord = ArchonStrategy.lol.y - 3;
             MapLocation goToArchon = new MapLocation(xcoord, ycoord);
             Pathing.walkTowards(rc,goToArchon);
             rc.buildRobot(RobotType.WATCHTOWER, dir);
