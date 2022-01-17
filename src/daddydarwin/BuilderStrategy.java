@@ -48,7 +48,7 @@ strictfp class BuilderStrategy {
             System.out.println("I moved!");
         }
 
-        if(rc.getTeamLeadAmount(rc.getTeam()) > 900 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
+        if(rc.getTeamLeadAmount(rc.getTeam()) > 550 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
             rc.buildRobot(RobotType.LABORATORY, dir);
             numLabs++;
         } else if(rc.getTeamLeadAmount(rc.getTeam()) > 1000 && rc.canBuildRobot(RobotType.WATCHTOWER, dir) && numWatchTowers <= 2){ // && numWatchTower per archon <= 2
