@@ -21,6 +21,7 @@ public class ArchonStrategy {
     static MapLocation archonPlace = null;
     static void runArchon(RobotController rc) throws GameActionException { //throw out static ints above instead read from awway each time
         archonPlace = rc.getLocation();
+        /**
         RobotInfo[] friendlyRobots = rc.senseNearbyRobots(archonPlace, rc.getType().actionRadiusSquared, rc.getTeam());
         int numSoldiersAround = 0;
         for (int i = 0; i < friendlyRobots.length; i++) {
@@ -33,6 +34,7 @@ public class ArchonStrategy {
                 buildTowardsLowRubble(rc, RobotType.SOLDIER);
             }
         }
+         **/
         if (RobotPlayer.turnCount > 800 && RobotPlayer.turnCount < 1000) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
             if (rc.getTeamLeadAmount(rc.getTeam()) > 100) {
@@ -42,7 +44,7 @@ public class ArchonStrategy {
         if (RobotPlayer.turnCount > 1700 && RobotPlayer.turnCount < 1900) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         }
-        if(rc.readSharedArray((int)(Math.pow(2,6))-4) < 20){
+        if(rc.readSharedArray((int)(Math.pow(2,6))-4) < 10){
             buildTowardsLowRubble(rc, RobotType.MINER);
             int ran = RobotPlayer.rng.nextInt(3);
             if(ran == 1) {
