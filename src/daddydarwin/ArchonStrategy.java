@@ -30,7 +30,9 @@ public class ArchonStrategy {
             }
         }
         if (numSoldiersAround < 5) {
-            buildTowardsLowRubble(rc, RobotType.SOLDIER);
+            for (int i = 0; i < 5; i++) {
+                buildTowardsLowRubble(rc, RobotType.SOLDIER);
+            }
         }
         if (RobotPlayer.turnCount > 800 && RobotPlayer.turnCount < 1000) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
