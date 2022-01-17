@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.lang.Math;
 import battlecode.common.*;
 import daddydarwin.RobotPlayer;
+
+import static battlecode.common.Clock.getBytecodeNum;
+
 //access shared array; update number of each robot/builder in the array (modify buildTowardsLowRubble)
 //keep soldier spawning in a x^2+y^2=16 circle where the archon is the origin
 public class ArchonStrategy {
@@ -15,7 +18,9 @@ public class ArchonStrategy {
      * This code is wrapped inside the infinite loop in run(), so it is called once
      * per turn.
      */
+    static MapLocation archonPlace = null;
     static void runArchon(RobotController rc) throws GameActionException { //throw out static ints above instead read from awway each time
+        archonPlace = rc.getLocation();
         if (RobotPlayer.turnCount > 800 && RobotPlayer.turnCount < 1000) {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
             if (rc.getTeamLeadAmount(rc.getTeam()) > 100) {
@@ -48,6 +53,9 @@ public class ArchonStrategy {
                 buildTowardsLowRubble(rc, RobotType.SOLDIER);
             }
         }
+        if (getBytecodeNum() == 20000) {
+            Clock.yield();
+        }
     }
 
     static void buildTowardsLowRubble(RobotController rc, RobotType type) throws GameActionException {
@@ -78,6 +86,8 @@ public class ArchonStrategy {
             return 0;
         }
     }
+
+
 
 
 }

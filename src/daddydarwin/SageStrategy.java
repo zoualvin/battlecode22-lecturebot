@@ -4,6 +4,7 @@ import battlecode.common.*;
 
 import java.util.Random;
 
+import static battlecode.common.Clock.getBytecodeNum;
 import static daddydarwin.RobotPlayer.directions;
 import static daddydarwin.RobotPlayer.rng;
 
@@ -36,6 +37,9 @@ public class SageStrategy {
             if (rc.canMove(dir)) {
                 rc.move(dir);
                 System.out.println("I moved!");}
+        }
+        if (getBytecodeNum() == 10000) {
+            Clock.yield();
         }
     }
 

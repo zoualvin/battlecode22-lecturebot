@@ -5,6 +5,8 @@ import daddydarwin.Pathing;
 
 import java.util.Random;
 
+import static battlecode.common.Clock.getBytecodeNum;
+
 strictfp class MinerStrategy {
     static Direction exploreDir = null;
     /**
@@ -74,6 +76,9 @@ strictfp class MinerStrategy {
             }
         }
 
+        if (getBytecodeNum() == 7500) {
+            Clock.yield();
+        }
         // Also try to move randomly.
         int directionIndex = daddydarwin.RobotPlayer.rng.nextInt(daddydarwin.RobotPlayer.directions.length);
         Direction dir = RobotPlayer.directions[directionIndex];

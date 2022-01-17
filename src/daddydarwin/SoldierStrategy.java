@@ -2,6 +2,7 @@ package daddydarwin;
 
 import battlecode.common.*;
 
+import static battlecode.common.Clock.getBytecodeNum;
 import static daddydarwin.RobotPlayer.directions;
 import static daddydarwin.RobotPlayer.rng;
 
@@ -179,7 +180,9 @@ public class SoldierStrategy {
       
         
         
-        
+        if (getBytecodeNum() == 10000) {
+			Clock.yield();
+		}
         
         
         //report death sequence

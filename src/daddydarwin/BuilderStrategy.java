@@ -5,6 +5,10 @@ import daddydarwin.Pathing;
 
 import java.util.Random;
 import daddydarwin.WatchTowerStrategy;
+import daddydarwin.ArchonStrategy;
+
+import static battlecode.common.Clock.getBytecodeNum;
+
 // implement mutation methods to mutate the watchtowers to level 3 if applicable
 strictfp class BuilderStrategy {
 
@@ -52,11 +56,18 @@ strictfp class BuilderStrategy {
             rc.buildRobot(RobotType.LABORATORY, dir);
             numLabs++;
         } else if(rc.getTeamLeadAmount(rc.getTeam()) > 1000 && rc.canBuildRobot(RobotType.WATCHTOWER, dir) && numWatchTowers <= 2){ // && numWatchTower per archon <= 2
+            int xcoord = ArchonStrategy.archonPlace.x + 4;
+            int ycoord = ArchonStrategy.archonPlace.y - 3;
+            MapLocation goToArchon = new MapLocation(xcoord, ycoord);
+            Pathing.walkTowards(rc,goToArchon);
             rc.buildRobot(RobotType.WATCHTOWER, dir);
             numWatchTowers++;
             // implement code to build the robot in space near the archon
         }
 
+        if (getBytecodeNum() == 7500) {
+            Clock.yield();
+        }
         //transmutation methods if there is at least 200pB mutate both watchtowers to level 2; same for laboratory
 
         if (rc.getTeamLeadAmount(rc.getTeam()) > 500 && rc.canMutate(WatchTowerStrategy.loc)) {
