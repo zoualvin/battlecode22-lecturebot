@@ -36,7 +36,17 @@ strictfp class MinerStrategy {
         }
 
         int visionRadius = rc.getType().visionRadiusSquared;
-        MapLocation[] nearbyLocations = rc.getAllLocationsWithinRadiusSquared(me, visionRadius);
+        MapLocation[] nearbyLocations = rc.senseNearbyLocationsWithLead(me, visionRadius, 1);
+        RobotInfo[] enemies = rc.senseNearbyRobots(visionRadius, rc.getTeam().opponent());
+        
+        for (int i = 0; i < enemies.length; i++) {
+        	if (enemies[i].getType() == battlecode.common.RobotType.ARCHON) {
+   			 MapLocation archonLocation = enemies[i].location;
+   			 RobotPlayer.addLocationToArray(rc, archonLocation);
+   			 
+        }
+        	
+        }
 
         MapLocation targetLocation = null;
         int distanceToTarget = Integer.MAX_VALUE;
@@ -44,7 +54,7 @@ strictfp class MinerStrategy {
         // For each nearby location
         for (MapLocation tryLocation : nearbyLocations) {
             // Is there any resource there?
-            if (rc.senseLead(tryLocation) > 1 || rc.senseGold(tryLocation) > 0) {
+            if (rc.senseLead(tryLocation) > 0 || rc.senseGold(tryLocation) > 0) {
                 // Yes! We should consider going here.
                 int distanceTo = me.distanceSquaredTo(tryLocation);
                 if (distanceTo < distanceToTarget) {
@@ -73,6 +83,15 @@ strictfp class MinerStrategy {
             System.out.println("I moved!");
         }
         
+        //report death sequence
+        if (rc.getHealth() < 6) {
+        	System.out.println("yo im dead");
+        	int soldierCount = rc.readSharedArray(60);
+        	soldierCount--;
+        	rc.writeSharedArray(60, soldierCount);
+        	System.out.println("there are " +rc.readSharedArray(60)+ " soldiers now!");//to check updated numbers
+        	
+        }
         
 
         
