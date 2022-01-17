@@ -86,10 +86,10 @@ strictfp class MinerStrategy {
         //report death sequence
         if (rc.getHealth() < 6) {
         	System.out.println("yo im dead");
-        	int soldierCount = rc.readSharedArray(60);
-        	soldierCount--;
-        	rc.writeSharedArray(60, soldierCount);
-        	System.out.println("there are " +rc.readSharedArray(60)+ " soldiers now!");//to check updated numbers
+        	int minerCount = rc.readSharedArray(60);
+        	minerCount--;
+        	rc.writeSharedArray(60, minerCount);
+        	System.out.println("there are " +rc.readSharedArray(60)+ " miners now!");//to check updated numbers
         	
         }
         
