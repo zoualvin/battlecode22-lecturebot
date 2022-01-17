@@ -27,7 +27,11 @@ public class ArchonStrategy {
         }
         if(rc.readSharedArray((int)(Math.pow(2,6))-4) < 20){
             buildTowardsLowRubble(rc, RobotType.MINER);
-        } else if (rc.readSharedArray((int)(Math.pow(2,6))-3) < 25){
+            int ran = RobotPlayer.rng.nextInt(3);
+            if(ran == 1) {
+            	buildTowardsLowRubble(rc, RobotType.SOLDIER);
+            }
+        } else if (rc.readSharedArray((int)(Math.pow(2,6))-3) < 35){
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         } else if (rc.readSharedArray((int)(Math.pow(2,6))-1) < 5){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
