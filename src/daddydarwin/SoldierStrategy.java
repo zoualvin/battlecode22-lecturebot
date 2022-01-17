@@ -97,7 +97,6 @@ public class SoldierStrategy {
         	for (int i = 0; i < enemies.length; i++) {
         		if(enemies[i].getType() == battlecode.common.RobotType.SOLDIER) {
         			 toAttack = enemies[i].location;
-        			 
         			break;
         		} else if (enemies[i].getType() == battlecode.common.RobotType.ARCHON) {
         			archon = enemies[i];
