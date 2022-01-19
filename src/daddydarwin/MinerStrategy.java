@@ -7,12 +7,14 @@ import java.util.Random;
 
 import static battlecode.common.Clock.getBytecodeNum;
 
+
 strictfp class MinerStrategy {
     static Direction exploreDir = null;
     /**
      * Run a single turn for a Miner.
      * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
-     */
+     **/
+
     static void runMiner(RobotController rc) throws GameActionException {
 
         if(exploreDir == null){
@@ -36,6 +38,7 @@ strictfp class MinerStrategy {
                 }
             }
         }
+
         int visionRadius = rc.getType().visionRadiusSquared;
         MapLocation[] nearbyLocations = rc.senseNearbyLocationsWithLead(me, visionRadius, 1);
         RobotInfo[] enemies = rc.senseNearbyRobots(visionRadius, rc.getTeam().opponent());
@@ -48,6 +51,7 @@ strictfp class MinerStrategy {
         }
         	
         }
+
 
         MapLocation targetLocation = null;
         int distanceToTarget = Integer.MAX_VALUE;
@@ -79,6 +83,7 @@ strictfp class MinerStrategy {
         if (getBytecodeNum() == 7500) {
             Clock.yield();
         }
+
         // Also try to move randomly.
         int directionIndex = daddydarwin.RobotPlayer.rng.nextInt(daddydarwin.RobotPlayer.directions.length);
         Direction dir = RobotPlayer.directions[directionIndex];
@@ -86,21 +91,18 @@ strictfp class MinerStrategy {
             rc.move(dir);
             System.out.println("I moved!");
         }
-        if (rc.getHealth() < 6) {
-            System.out.println("lol bishes im dead");
-            ArchonStrategy.miners -= 1;
-        }
-        /**
+
+
         //report death sequence
         if (rc.getHealth() < 6) {
         	System.out.println("yo im dead");
-        	//int minerCount = rc.readSharedArray(60);
-        	//minerCount-=1;
+        	int minerCount = rc.readSharedArray(60);
+        	minerCount-=1;
         	rc.writeSharedArray(60, rc.readSharedArray(60)-1);
-        	//System.out.println("there are " +rc.readSharedArray(60)+ " miners now!");//to check updated numbers
+        	System.out.println("there are " +rc.readSharedArray(60)+ " miners now!");//to check updated numbers
         	
         }
-         **/
+
         
 
         
@@ -110,3 +112,4 @@ strictfp class MinerStrategy {
 
 
 }
+ **/

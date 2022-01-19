@@ -11,56 +11,19 @@ import static battlecode.common.Clock.getBytecodeNum;
 //keep soldier spawning in a x^2+y^2=16 circle where the archon is the origin
 
 public class ArchonStrategy {
-    static int miners = 0, soldiers = 0, builders = 0, sages = 0, watchtowers = 0, labs = 0;
-    static MapLocation lol = null;
     /**
      * Run a single turn for an Archon.
      * This code is wrapped inside the infinite loop in run(), so it is called once
      * per turn.
      */
-    static void runArchon(RobotController rc) throws GameActionException {
-        MapLocation archonLoc = rc.getLocation();
-        lol = archonLoc;
-        if (RobotPlayer.turnCount > 800 && RobotPlayer.turnCount < 1000) {
-            buildTowardsLowRubble(rc, RobotType.SOLDIER);
-            if (rc.getTeamLeadAmount(rc.getTeam()) > 100) {
-                buildTowardsLowRubble(rc, RobotType.MINER);
-            }
-        }
-        if (RobotPlayer.turnCount > 1800 && RobotPlayer.turnCount < 1900) {
-            buildTowardsLowRubble(rc, RobotType.SOLDIER);
-        }
-        if(miners < 10){
-            buildTowardsLowRubble(rc, RobotType.MINER);
-        } else if (soldiers < 25){
-            buildTowardsLowRubble(rc, RobotType.SOLDIER);
-        } else if (builders < 5){
-            buildTowardsLowRubble(rc, RobotType.BUILDER);
-        }
-        else if (miners < soldiers && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
-            buildTowardsLowRubble(rc, RobotType.MINER);
-        }
-        else if (builders < soldiers / 20){
-            buildTowardsLowRubble(rc, RobotType.BUILDER);
-        }  else if (sages < 1) {
-            buildTowardsLowRubble(rc, RobotType.SAGE);
-        }
-        else {
-            int choose = 0+(int)(Math.random() * ((1-0)+1));
-            if (choose == 0) {
-                buildTowardsLowRubble(rc, RobotType.MINER);
-            } else {
-                buildTowardsLowRubble(rc, RobotType.SOLDIER);
-            }
-        }
-    }
+
     //static int miners = 0, soldiers = 0, builders = 0, sages = 0, watchtowers = 0, labs = 0;
     //in array 2^6-4 is miner --> 2^6-3 soldier --> 2^6 - 2 archon --> 2^6 - 1 builders
     /**
      * Run a single turn for an Archon.
      * This code is wrapped inside the infinite loop in run(), so it is called once
      * per turn.
-     *
+     * */
     static MapLocation lol = null;
     static void runArchon(RobotController rc) throws GameActionException { //throw out static ints above instead read from awway each time
         MapLocation archonPlace = rc.getLocation();
@@ -117,9 +80,7 @@ public class ArchonStrategy {
             Clock.yield();
         }
     }
-     **/
 
-    /**
     static void buildTowardsLowRubble(RobotController rc, RobotType type) throws GameActionException {
         Direction[] dirs = Arrays.copyOf(RobotPlayer.directions, RobotPlayer.directions.length);
         Arrays.sort(dirs, (a, b) -> getRubble(rc, a) - getRubble(rc, b));
@@ -133,25 +94,6 @@ public class ArchonStrategy {
                     //case SAGE: sages++; break;
                     //case WATCHTOWER: watchtowers++; break;
                     //case LABORATORY: labs++; break;
-                    default: break;
-                }
-            }
-        }
-    }
-     **/
-    static void buildTowardsLowRubble(RobotController rc, RobotType type) throws GameActionException {
-        Direction[] dirs = Arrays.copyOf(RobotPlayer.directions, RobotPlayer.directions.length);
-        Arrays.sort(dirs, (a, b) -> getRubble(rc, a) - getRubble(rc, b));
-        for (Direction d : dirs){
-            if(rc.canBuildRobot(type, d)){
-                rc.buildRobot(type, d);
-                switch(type){
-                    case MINER: miners++; break;
-                    case SOLDIER: soldiers++;  break;
-                    case BUILDER: builders++; break;
-                    case SAGE: sages++; break;
-                    case WATCHTOWER: watchtowers++; break;
-                    case LABORATORY: labs++; break;
                     default: break;
                 }
             }
