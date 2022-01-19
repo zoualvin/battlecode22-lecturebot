@@ -112,4 +112,3 @@ strictfp class MinerStrategy {
 
 
 }
- **/
