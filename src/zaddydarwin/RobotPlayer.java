@@ -140,7 +140,7 @@ public strictfp class RobotPlayer {
                     nearbyArchon = true;
                     int choose = (int)(Math.random() * (4 - 0 + 1)) + 0;
 
-                    if(choose == 2){
+                    if(choose == 2 || choose == 3 || choose == 4){
                         defense = true;
                     }
                     break;
