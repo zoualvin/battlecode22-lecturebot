@@ -131,15 +131,34 @@ public strictfp class RobotPlayer {
         int radius = rc.getType().actionRadiusSquared;
         Team opponent = rc.getTeam().opponent();
         RobotInfo[] enemies = rc.senseNearbyRobots(radius, opponent);
+        RobotInfo[] friends = rc.senseNearbyRobots(radius, rc.getTeam());
+        boolean nearbyArchon = false;
+        boolean defense = false;
+        if(friends.length > 0){
+            for(RobotInfo f: friends){
+                if (f.getType().equals(RobotType.ARCHON)){
+                    nearbyArchon = true;
+                    int choose = (int)(Math.random() * (4 - 0 + 1)) + 0;
+
+                    if(choose == 2){
+                        defense = true;
+                    }
+                    break;
+                }
+            }
+        }
+
         if (enemies.length > 0) {
             MapLocation toAttack = enemies[0].location;
             if (rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
             }
         } else {
-            Direction dir = rc.getLocation().directionTo(Communication.getClosestEnemy(rc));
-            if(dir != null && rc.canMove(dir)){
-                rc.move(dir);
+            if (!defense) { //offense specific stuff
+                Direction dir = rc.getLocation().directionTo(Communication.getClosestEnemy(rc));
+                if(dir != null && rc.canMove(dir)){
+                    rc.move(dir);
+                }
             }
         }
 
