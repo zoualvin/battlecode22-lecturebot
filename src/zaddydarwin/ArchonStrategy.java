@@ -5,7 +5,7 @@ import java.util.Arrays;
 import battlecode.common.*;
 
 public class ArchonStrategy {
-
+    static MapLocation lol = null;
     static int miners = 0, soldiers = 0, builders = 0;
     /**
      * Run a single turn for an Archon.
@@ -13,6 +13,7 @@ public class ArchonStrategy {
      * per turn.
      */
     static void runArchon(RobotController rc) throws GameActionException {
+        lol = rc.getLocation();
         miners = Communication.getAlive(rc, RobotType.MINER);
         soldiers = Communication.getAlive(rc, RobotType.SOLDIER);
         builders = Communication.getAlive(rc, RobotType.BUILDER);

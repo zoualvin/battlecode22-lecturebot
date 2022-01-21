@@ -1,13 +1,15 @@
 package zaddydarwin;
 
 import battlecode.common.*;
-
+import zaddydarwin.ArchonStrategy;
+import zaddydarwin.Pathing;
 import java.util.Random;
 
 strictfp class BuilderStrategy {
 
     static int turn = 0;
-
+    static int numLabs = 0;
+    static int numWatchTowers = 0;
     static void runBuilder(RobotController rc) throws GameActionException{
 
         turn ++;
@@ -45,10 +47,25 @@ strictfp class BuilderStrategy {
             System.out.println("I moved!");
         }
 
-        if(rc.getTeamLeadAmount(rc.getTeam()) > 10000 && turn % 150 == 0 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
+        if(rc.getTeamLeadAmount(rc.getTeam()) > 550 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
             rc.buildRobot(RobotType.LABORATORY, dir);
-        } else if(rc.getTeamLeadAmount(rc.getTeam()) > 7000 && turn % 100 == 0 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){
+            numLabs++;
+        } else if(rc.getTeamLeadAmount(rc.getTeam()) > 180 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){ // && numWatchTower per archon <= 2
+            int xcoord = zaddydarwin.ArchonStrategy.lol.x + 4;
+            int ycoord = zaddydarwin.ArchonStrategy.lol.y - 3;
+            MapLocation goToArchon = new MapLocation(xcoord, ycoord);
+            zaddydarwin.Pathing.walkTowards(rc,goToArchon);
             rc.buildRobot(RobotType.WATCHTOWER, dir);
+            numWatchTowers++;
+            // implement code to build the robot in space near the archon
         }
     }
 }
+
+/**
+ * if(rc.getTeamLeadAmount(rc.getTeam()) > 10000 && turn % 150 == 0 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
+ *             rc.buildRobot(RobotType.LABORATORY, dir);
+ *         } else if(rc.getTeamLeadAmount(rc.getTeam()) > 7000 && turn % 100 == 0 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){
+ *             rc.buildRobot(RobotType.WATCHTOWER, dir);
+ *         }
+ */
