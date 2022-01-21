@@ -47,17 +47,18 @@ strictfp class BuilderStrategy {
             System.out.println("I moved!");
         }
 
-        if(rc.getTeamLeadAmount(rc.getTeam()) > 550 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
-            rc.buildRobot(RobotType.LABORATORY, dir);
-            numLabs++;
-        } else if(rc.getTeamLeadAmount(rc.getTeam()) > 180 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){ // && numWatchTower per archon <= 2
-            int xcoord = zaddydarwin.ArchonStrategy.lol.x + 4;
-            int ycoord = zaddydarwin.ArchonStrategy.lol.y - 3;
-            MapLocation goToArchon = new MapLocation(xcoord, ycoord);
-            zaddydarwin.Pathing.walkTowards(rc,goToArchon);
-            rc.buildRobot(RobotType.WATCHTOWER, dir);
-            numWatchTowers++;
-            // implement code to build the robot in space near the archon
+        if (rc.getTeamLeadAmount(rc.getTeam()) > 200) {
+            int choose = (int)(Math.random()*(5-0+1)) + 0;
+            if (choose == 3) {
+                if (rc.canBuildRobot(RobotType.LABORATORY, dir)) {
+                    rc.buildRobot(RobotType.LABORATORY, dir);
+                }
+            }
+            else {
+                if (rc.canBuildRobot(RobotType.WATCHTOWER, dir)) {
+                    rc.buildRobot(RobotType.WATCHTOWER, dir);
+                }
+            }
         }
     }
 }
